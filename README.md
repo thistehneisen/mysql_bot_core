@@ -41,3 +41,55 @@ REQUIREMENTS:
 - http://reko.tiira.net/mmysql/ (mIRC MySQL by Reko Tiira)
 - MySQL database with structure that's below.
 
+Database structure:
+```
+CREATE TABLE `messages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sender` int(10) unsigned NOT NULL,
+  `receiver` int(10) unsigned NOT NULL,
+  `message` text COLLATE utf8_latvian_ci NOT NULL,
+  `time` datetime DEFAULT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_latvian_ci;
+
+CREATE TABLE `sessions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(10) unsigned NOT NULL,
+  `status` tinyint(3) unsigned NOT NULL,
+  `address` varchar(50) NOT NULL,
+  `nickname` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `registered` datetime NOT NULL,
+  `active` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `group` smallint(10) unsigned NOT NULL DEFAULT '0',
+  `level` int(10) unsigned NOT NULL DEFAULT '0',
+  `points` int(10) unsigned NOT NULL,
+  `signature` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `channels` (
+  `channel` varchar(50) NOT NULL,
+  `users` smallint(5) unsigned NOT NULL,
+  `regulars` smallint(5) unsigned NOT NULL,
+  `voices` smallint(5) unsigned NOT NULL,
+  `halfops` smallint(5) unsigned NOT NULL,
+  `operators` smallint(5) unsigned NOT NULL,
+  `topic` varchar(255) CHARACTER SET utf8 COLLATE utf8_latvian_ci NOT NULL,
+  `mode` varchar(20) CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`channel`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `general` (
+  `setting` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY (`setting`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
